@@ -3,6 +3,7 @@
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\InstantController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +22,12 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
-Route::get('/instants/create', [InstantController::class, 'create'])->name('instants.create');
+Route::get('/instants/create', [InstantController::class, 'create'])->name('instants.create')->middleware('auth');
 Route::post('/instants', [InstantController::class, 'store'])->name('instants.store');
 
 
 Route::delete('/instants/{id}', [InstantController::class, 'destroy'])->name('instants.destroy');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
